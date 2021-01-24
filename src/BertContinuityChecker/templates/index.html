@@ -1,0 +1,64 @@
+<!doctype html>
+<title>bert デモ</title>
+
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+
+<h1>bert のデモページです</h1>
+<form action="/result" method="post" enctype="multipart/form-data">
+  <p>
+    下のフォームに解析したい文を貼り付けて、解析ボタンを押してください。 <br/>
+    <textarea name="target" rows="12" cols="40">{% if default %}{{ default }}{% endif %}</textarea>
+  </p>
+  <p><input type="submit" value="解析" /></p>
+</form>
+
+{% if result %}
+<div class="result">
+<table>
+<tr>
+  <td>
+    <ol>
+      <ul>段落番号</ul>
+      {% for sent_data in result.text_data %}
+      <ul>{{sent_data.par_number}}</ul>
+      {% endfor %}
+    </ol>
+  </td>
+  <td>
+    <ol>
+      <ul>文</ul>
+      {% for sent_data in result.text_data %}
+      <ul>{{sent_data.sent}}</ul>
+      {% endfor %}
+    </ol>
+  </td>
+  <td>
+    <ol>
+      <ul>連続度</ul>
+      {% for score in result.serial_scores %}
+      <ul>{{score}}</ul>
+      {% endfor %}
+    </ol>
+  </td>
+  <td>
+    <ol>
+      <ul>同じ段落度</ul>
+      {% for score in result.par_scores %}
+      <ul>{{score}}</ul>
+      {% endfor %}
+    </ol>
+  </td>
+</tr>
+</table>
+</div>
+{% endif %}
+
+</body>
+
+</html>

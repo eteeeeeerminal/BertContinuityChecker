@@ -1,0 +1,26 @@
+.red {
+  color: red;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  padding: 0px;
+}
+
+ol {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+ul {
+  padding: 0px;
+  border:solid 1px;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
