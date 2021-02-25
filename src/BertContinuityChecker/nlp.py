@@ -7,6 +7,7 @@ from typing import List
 import chardet
 
 from transformers.modeling_bert import BertForSequenceClassification
+from transformers.configuration_bert import BertConfig
 from transformers.tokenization_bert import BertTokenizer
 import torch
 import torch.nn.functional as F
@@ -77,17 +78,18 @@ class BertEvaluator:
         self.tokenizer = BertTokenizer.from_pretrained(
             pretrained_path, do_lower_case=False
         )
-        self.serial_model = BertForSequenceClassification.from_pretrained(
-            pretrained_path, num_labels=4
-        )
-        self.par_model = BertForSequenceClassification.from_pretrained(
-            pretrained_path, num_labels=2
-        )
+        config = BertConfig.from_pretrained(pretrained_path)
+        config.num_labels = 4
+        self.serial_model = BertForSequenceClassification(config)
+        config.num_labels = 2
+        self.par_model = BertForSequenceClassification(config)
 
         self.serial_model.load_state_dict(torch.load(serial_model_path))
         self.serial_model.to(self.device)
+        self.serial_model.eval()
         self.par_model.load_state_dict(torch.load(par_model_path))
         self.par_model.to(self.device)
+        self.par_model.eval()
 
     def evaluate(self, user_input, candidate):
         with torch.no_grad():
