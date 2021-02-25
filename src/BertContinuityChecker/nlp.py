@@ -24,7 +24,7 @@ class WindowResult:
 @dataclasses.dataclass
 class AnalyzeResult:
     text_data:List[SentObject]
-    serial_scores:List[float]
+    serial_scores:List[int]
     par_scores:List[float]
     LABEL:str = "\t".join(["段落番号", "データ", "連続度", "同じ段落度"]) + '\n'
 
@@ -99,8 +99,8 @@ class BertEvaluator:
             result_serial = self.serial_model.forward(
                 input_ids, token_type_ids=token_type_ids
             )
-            result_serial = F.softmax(result_serial[0], dim=1)
-            result_serial = result_serial[0].cpu().numpy().tolist()
+            _, predicted = torch.max(result_serial[0], 1)
+            result_serial = predicted.cpu().numpy().tolist()
 
             result_par = self.par_model.forward(
                 input_ids, token_type_ids=token_type_ids

@@ -33,4 +33,4 @@ def save_response_content(response, destination):
                if chunk: # filter out keep-alive new chunks
                    f.write(chunk)
 
-download_file_from_google_drive("1oZVOXQbyofb9jSGRagpTjVYaD2MdhYV7", "bert_output.zip")
+download_file_from_google_drive("14m9thCxzSZYAOnSMuv9QOuIbcWvU09vl", "bert_output2.zip")
