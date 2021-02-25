@@ -77,11 +77,12 @@ class BertEvaluator:
         self.tokenizer = BertTokenizer.from_pretrained(
             pretrained_path, do_lower_case=False
         )
-        model = BertForSequenceClassification.from_pretrained(
+        self.serial_model = BertForSequenceClassification.from_pretrained(
             pretrained_path, num_labels=2
         )
-        self.serial_model = copy.deepcopy(model)
-        self.par_model = copy.deepcopy(model)
+        self.par_model = BertForSequenceClassification.from_pretrained(
+            pretrained_path, num_labels=4
+        )
 
         self.serial_model.load_state_dict(torch.load(serial_model_path))
         self.serial_model.to(self.device)
