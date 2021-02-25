@@ -78,10 +78,10 @@ class BertEvaluator:
             pretrained_path, do_lower_case=False
         )
         self.serial_model = BertForSequenceClassification.from_pretrained(
-            pretrained_path, num_labels=2
+            pretrained_path, num_labels=4
         )
         self.par_model = BertForSequenceClassification.from_pretrained(
-            pretrained_path, num_labels=4
+            pretrained_path, num_labels=2
         )
 
         self.serial_model.load_state_dict(torch.load(serial_model_path))
